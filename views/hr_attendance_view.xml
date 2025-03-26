@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Attendance Form View Extension -->
+        <record id="view_attendance_form_extended" model="ir.ui.view">
+            <field name="name">hr.attendance.form.extended</field>
+            <field name="model">hr.attendance</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Attendance Details">
+                        <group colspan="4" col="4">
+                            <field name="worked_hours" readonly="1"/>
+                            <field name="attendance_status"/>
+                            <field name="notes" colspan="4"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+        
+        <!-- Attendance Tree View -->
+        <record id="view_attendance_tree_extended" model="ir.ui.view">
+            <field name="name">hr.attendance.tree.extended</field>
+            <field name="model">hr.attendance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Attendance Records" colors="red:attendance_status=='late';blue:attendance_status=='overtime'">
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="action"/>
+                    <field name="worked_hours"/>
+                    <field name="attendance_status"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Attendance Search View -->
+        <record id="view_attendance_search_extended" model="ir.ui.view">
+            <field name="name">hr.attendance.search.extended</field>
+            <field name="model">hr.attendance</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Attendance">
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="attendance_status"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Attendance Status" domain="[]" context="{'group_by':'attendance_status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Attendance Action Window -->
+        <record id="action_hr_attendance_extended" model="ir.actions.act_window">
+            <field name="name">Attendance Records</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_attendance_search_extended"/>
+        </record>
+        
+        <!-- Menu Item for Attendance -->
+        <menuitem 
+            name="Attendance Analysis" 
+            id="menu_hr_attendance_extended" 
+            parent="hr_attendance.menu_hr_attendance" 
+            sequence="20" 
+            action="action_hr_attendance_extended"/>
+    </data>
+</openerp>

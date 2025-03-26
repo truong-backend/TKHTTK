@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Employee Report Template -->
+        <report 
+            id="hr_employee_summary_report"
+            name="hr.employee.summary"
+            model="hr.employee"
+            report_type="qweb-pdf"
+            file="hr_custom.employee_summary_report"
+            string="Employee Summary"
+            menu="True"
+            header="False"
+        />
+        
+        <!-- QWeb Report Template -->
+        <template id="employee_summary_report_template">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <h2>Employee Details Report</h2>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Employee Code</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Job Position</th>
+                                <th>Age</th>
+                                <th>Education Level</th>
+                                <th>Performance Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td><t t-esc="doc.employee_code"/></td>
+                                <td><t t-esc="doc.name"/></td>
+                                <td><t t-esc="doc.department_id.name"/></td>
+                                <td><t t-esc="doc.job_id.name"/></td>
+                                <td><t t-esc="doc.age"/></td>
+                                <td><t t-esc="doc.education_level"/></td>
+                                <td><t t-esc="doc.performance_rating"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>

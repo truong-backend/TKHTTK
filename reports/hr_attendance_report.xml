@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Attendance Report Template -->
+        <report 
+            id="hr_attendance_summary_report"
+            name="hr.attendance.summary"
+            model="hr.attendance"
+            report_type="qweb-pdf"
+            file="hr_custom.attendance_summary_report"
+            string="Attendance Summary"
+            menu="True"
+            header="False"
+        />
+        
+        <!-- QWeb Report Template -->
+        <template id="attendance_summary_report_template">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <h2>Attendance Summary Report</h2>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Department</th>
+                                <th>Total Working Days</th>
+                                <th>Total Hours Worked</th>
+                                <th>Late Arrivals</th>
+                                <th>Early Leaves</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td><t t-esc="doc.employee_id.name"/></td>
+                                <td><t t-esc="doc.employee_id.department_id.name"/></td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Contract Form View Extension -->
+        <record id="view_contract_form_extended" model="ir.ui.view">
+            <field name="name">hr.contract.form.extended</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.view_contract_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Contract Details">
+                        <group colspan="4" col="4">
+                            <field name="contract_code" readonly="1"/>
+                            <field name="contract_type_detailed"/>
+                            <field name="contract_expiration_status"/>
+                            <field name="trial_period_length"/>
+                            <field name="salary_structure"/>
+                            <field name="performance_incentives"/>
+                            <field name="additional_benefits" colspan="4"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+        
+        <!-- Contract Tree View -->
+        <record id="view_contract_tree_extended" model="ir.ui.view">
+            <field name="name">hr.contract.tree.extended</field>
+            <field name="model">hr.contract</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts" colors="red:contract_expiration_status=='expired';orange:contract_expiration_status=='expiring_soon'">
+                    <field name="contract_code"/>
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="contract_type_detailed"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="contract_expiration_status"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Contract Search View -->
+        <record id="view_contract_search_extended" model="ir.ui.view">
+            <field name="name">hr.contract.search.extended</field>
+            <field name="model">hr.contract</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Contracts">
+                    <field name="employee_id"/>
+                    <field name="contract_code"/>
+                    <field name="contract_type_detailed"/>
+                    <field name="contract_expiration_status"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Contract Type" domain="[]" context="{'group_by':'contract_type_detailed'}"/>
+                        <filter string="Expiration Status" domain="[]" context="{'group_by':'contract_expiration_status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Contract Action Window -->
+        <record id="action_hr_contract_extended" model="ir.actions.act_window">
+            <field name="name">Contract Management</field>
+            <field name="res_model">hr.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contract_search_extended"/>
+        </record>
+        
+        <!-- Menu Item for Contracts -->
+        <menuitem 
+            name="Contract Management" 
+            id="menu_hr_contract_extended" 
+            parent="hr_contract.menu_hr_contract_menu" 
+            sequence="20" 
+            action="action_hr_contract_extended"/>
+    </data>
+</openerp>

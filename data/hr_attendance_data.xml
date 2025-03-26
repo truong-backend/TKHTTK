@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Attendance Configuration -->
+        <record id="hr_attendance_configuration" model="ir.config_parameter">
+            <field name="key">hr.attendance.standard_hours</field>
+            <field name="value">{"start_time": "09:00", "end_time": "18:00"}</field>
+        </record>
+        
+        <!-- Attendance Workflow -->
+        <record id="attendance_workflow" model="workflow">
+            <field name="name">HR Attendance Workflow</field>
+            <field name="osv">hr.attendance</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="attendance_workflow"/>
+            <field name="name">Draft</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="kind">function</field>
+        </record>
+        
+        <record id="act_confirmed" model="workflow.activity">
+            <field name="wkf_id" ref="attendance_workflow"/>
+            <field name="name">Confirmed</field>
+            <field name="action">write({'state':'confirmed'})</field>
+            <field name="kind">function</field>
+        </record>
+    </data>
+</openerp>

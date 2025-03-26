@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Employee Form View Extension -->
+        <record id="view_employee_form_extended" model="ir.ui.view">
+            <field name="name">hr.employee.form.extended</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Additional Information">
+                        <group colspan="4" col="4">
+                            <field name="employee_code" readonly="1"/>
+                            <field name="age" readonly="1"/>
+                            <field name="emergency_contact"/>
+                            <field name="education_level"/>
+                            <field name="performance_rating"/>
+                        </group>
+                        <separator string="Professional Skills" colspan="4"/>
+                        <field name="skills_ids" colspan="4" nolabel="1">
+                            <tree string="Skills">
+                                <field name="name"/>
+                                <field name="skill_category"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+        
+        <!-- Employee Tree View -->
+        <record id="view_employee_tree_extended" model="ir.ui.view">
+            <field name="name">hr.employee.tree.extended</field>
+            <field name="model">hr.employee</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employees">
+                    <field name="employee_code"/>
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="age"/>
+                    <field name="performance_rating"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Skills Tree View -->
+        <record id="view_hr_skills_tree" model="ir.ui.view">
+            <field name="name">hr.skills.tree</field>
+            <field name="model">hr.skills</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Professional Skills">
+                    <field name="name"/>
+                    <field name="skill_category"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Skills Form View -->
+        <record id="view_hr_skills_form" model="ir.ui.view">
+            <field name="name">hr.skills.form</field>
+            <field name="model">hr.skills</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Skill Details">
+                    <group colspan="4" col="4">
+                        <field name="name" required="1"/>
+                        <field name="skill_category" required="1"/>
+                        <field name="description" colspan="4"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Skills Search View -->
+        <record id="view_hr_skills_search" model="ir.ui.view">
+            <field name="name">hr.skills.search</field>
+            <field name="model">hr.skills</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Skills">
+                    <field name="name"/>
+                    <field name="skill_category"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Skill Category" domain="[]" context="{'group_by':'skill_category'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Skills Action Window -->
+        <record id="action_hr_skills" model="ir.actions.act_window">
+            <field name="name">Professional Skills</field>
+            <field name="res_model">hr.skills</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_skills_search"/>
+        </record>
+        
+        <!-- Menu Item for Skills -->
+        <menuitem 
+            name="Professional Skills" 
+            id="menu_hr_skills" 
+            parent="hr.menu_hr_main" 
+            sequence="50" 
+            action="action_hr_skills"/>
+    </data>
+</openerp>
